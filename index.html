@@ -9,6 +9,7 @@
 </head>
 <body class="featured-page">
 
+    <!-- Sidebar / Menuja Anësore -->
     <div class="sidebar">	
         <div class="logo-container">
             <h2>Muzik Shqip</h2>
@@ -21,8 +22,8 @@
         </ul>
     </div>
 
+    <!-- Përmbajtja Kryesore -->
     <div class="main-content">
-        
         <div class="top-tabs">
             <a href="#" class="tab active">Hitet</a>
             <a href="#" class="tab">Këngët të Reja</a>
@@ -31,14 +32,14 @@
 
         <div class="featured-section">
             <h2 class="section-title">Top Hitet - Më të Shkarkuara</h2>
-            
             <div class="tracks-container">
                 
-                <div class="track-card">
+                <!-- Kënga 1 -->
+                <div class="track-card" data-id="butrint-imeri-cigaren">
                     <div class="thumb-container">
                         <img src="https://shkarko.co" alt="Butrint Imeri" class="poster" />
                         <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon"></i>
+                            <i class="fa-solid fa-play play-icon" id="icon-butrint-imeri-cigaren"></i>
                         </div>
                     </div>
                     <div class="track-details">
@@ -47,11 +48,12 @@
                     </div>
                 </div>
 
-                <div class="track-card">
+                <!-- Kënga 2 -->
+                <div class="track-card" data-id="don-xhoni-katile">
                     <div class="thumb-container">
                         <img src="https://shkarko.co" alt="Don Xhoni" class="poster" />
                         <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon"></i>
+                            <i class="fa-solid fa-play play-icon" id="icon-don-xhoni-katile"></i>
                         </div>
                     </div>
                     <div class="track-details">
@@ -60,11 +62,12 @@
                     </div>
                 </div>
 
-                <div class="track-card">
+                <!-- Kënga 3 -->
+                <div class="track-card" data-id="elvana-gjata-x-gimi-o-x-bardhi-ex">
                     <div class="thumb-container">
                         <img src="https://shkarko.co" alt="Elvana Gjata" class="poster" />
                         <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon"></i>
+                            <i class="fa-solid fa-play play-icon" id="icon-elvana-gjata-x-gimi-o-x-bardhi-ex"></i>
                         </div>
                     </div>
                     <div class="track-details">
@@ -73,16 +76,17 @@
                     </div>
                 </div>
 
-                <div class="track-card">
+                <!-- Kënga 4 -->
+                <div class="track-card" data-id="noizy-x-loredana-heart-attack">
                     <div class="thumb-container">
                         <img src="https://shkarko.co" alt="Noizy x Loredana" class="poster" />
                         <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon"></i>
+                            <i class="fa-solid fa-play play-icon" id="icon-noizy-x-loredana-heart-attack"></i>
                         </div>
                     </div>
                     <div class="track-details">
                         <h3 class="track-title">NOIZY X LOREDANA - HEART ATTACK</h3>
-                        <p class="track-downloads"><i class="fa-solid fa-download"></i> Shkarkuar</p>
+                        <p class="track-downloads"><i class="fa-solid fa-download"></i> 189,450 Shkarkime</p>
                     </div>
                 </div>
 
@@ -90,7 +94,25 @@
         </div>
     </div>
 
+    <!-- Audio Player Component -->
+    <div class="audio-player-bar" id="playerBar">
+        <div class="player-info">
+            <i class="fa-solid fa-music music-wave" id="musicWave"></i>
+            <span id="currentTrackTitle">Asnjë këngë...</span>
+        </div>
+        <div class="player-controls">
+            <button id="btn-backward"><i class="fa-solid fa-backward-step"></i></button>
+            <button id="btn-main-play"><i class="fa-solid fa-circle-play"></i></button>
+            <button id="btn-forward"><i class="fa-solid fa-forward-step"></i></button>
+        </div>
+        <div class="player-volume">
+            <i class="fa-solid fa-volume-high"></i>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" />
+        </div>
+    </div>
+
+    <!-- Përfshirja e script.js -->
+    <script type="text/javascript" src="script.js"></script>
 </body>
-</html>    <script src="script.js"></script>
-</body>
+</html>
 
