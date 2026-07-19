@@ -1,0 +1,15 @@
+/* Rregullat bazë dhe variablat e stilit */
+:root {
+    --main-bg: #000000;
+    --sidebar-bg: #050505;
+    --primary-color: #00adb5;
+    --text-color: #ffffff;
+    --border-color: #111111;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
