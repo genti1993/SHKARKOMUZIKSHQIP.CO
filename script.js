@@ -1,4 +1,3 @@
-// Menaxhimi i këngëve (Track Management)
 const songsData = {
     "butrint-imeri-cigaren": {
         title: "BUTRINT IMERI - CIGAREN",
@@ -23,7 +22,6 @@ const currentAudio = new Audio();
 let isPlaying = false;
 let currentTrackId = null;
 
-// Elementet DOM
 const playerBar = document.getElementById('playerBar');
 const currentTrackTitle = document.getElementById('currentTrackTitle');
 const btnMainPlay = document.getElementById('btn-main-play');
@@ -67,11 +65,10 @@ function handlePlayPause(trackId) {
             mainPlayIcon.className = "fa-solid fa-circle-pause";
             if (cardIcon) cardIcon.className = "fa-solid fa-pause play-icon";
             musicWave.classList.add('animated');
-        }).catch(err => console.error("Gabim audio:", err));
+        }).catch(err => console.error("Gabim gjatë ngarkimit të audios:", err));
     }
 }
 
-// Kalimi te kënga tjetër (Next)
 function nextTrack() {
     if (!currentTrackId) return;
     let currentIndex = keys.indexOf(currentTrackId);
@@ -79,7 +76,6 @@ function nextTrack() {
     handlePlayPause(keys[nextIndex]);
 }
 
-// Kalimi te kënga e mëparshme (Previous)
 function prevTrack() {
     if (!currentTrackId) return;
     let currentIndex = keys.indexOf(currentTrackId);
@@ -87,7 +83,6 @@ function prevTrack() {
     handlePlayPause(keys[prevIndex]);
 }
 
-// Event Listeners
 trackCards.forEach(card => {
     card.addEventListener('click', () => {
         handlePlayPause(card.getAttribute('data-id'));
@@ -108,7 +103,8 @@ currentAudio.addEventListener('ended', () => {
     musicWave.classList.remove('animated');
     const cardIcon = document.getElementById(`icon-${currentTrackId}`);
     if (cardIcon) cardIcon.className = "fa-solid fa-play play-icon";
-    nextTrack(); // Luaj automatikisht këngën pasardhëse
+    nextTrack();
 });
+
 
 
