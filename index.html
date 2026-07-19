@@ -1,120 +1,78 @@
-<!DOCTYPE html>
-<html lang="sq">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://w3.org">
+<html xmlns="http://w3.org" lang="sq" xml:lang="sq">
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top Hitet Shqip</title>
-    <!-- Lidhja me skedarin CSS -->
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <!-- Libraria e ikonave -->
+    <title>Shkarko Muzik Shqip mp3 falas</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     <link rel="stylesheet" href="https://cloudflare.com" />
 </head>
 <body class="featured-page">
 
-    <!-- Menuja Anësore -->
+    <!-- Menuja Anësore (Sidebar UI) -->
     <div class="sidebar">	
         <div class="logo-container">
             <h2>Muzik Shqip</h2>
         </div>
+        
+        <!-- Shiriti i Kërkimit UI -->
+        <div class="search-box-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Kërko artist ose këngë..." />
+        </div>
+
         <ul class="nav-links">
-            <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Ballina</a></li>
-            <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i> Kërko</a></li>
-            <li><a href="#"><i class="fa-solid fa-circle-info"></i> Informata</a></li>
-            <li><a href="#"><i class="fa-solid fa-envelope"></i> Na kontaktoni</a></li>
+            <li><a href="#" class="nav-item active" data-target="home"><i class="fa-solid fa-house"></i> Ballina</a></li>
+            <li><a href="#" class="nav-item" data-target="favorites"><i class="fa-solid fa-heart"></i> Të Preferuarat</a></li>
+            <li><a href="#" class="nav-item" data-target="info"><i class="fa-solid fa-circle-info"></i> Informata</a></li>
         </ul>
     </div>
 
-    <!-- Përmbajtja Kryesore -->
+    <!-- Përmbajtja Qendrore -->
     <div class="main-content">
-        <div class="top-tabs">
-            <a href="#" class="tab active">Hitet</a>
-            <a href="#" class="tab">Këngët të Reja</a>
-            <a href="#" class="tab">Albume</a>
+        <!-- Tabet e Lundrimit UI -->
+        <div class="top-tabs" id="tabMenu">
+            <button class="tab active" data-category="all">Të Gjitha</button>
+            <button class="tab" data-category="hitet">Top Hitet</button>
+            <button class="tab" data-category="new">Këngët të Reja</button>
         </div>
 
-        <div class="featured-section">
-            <h2 class="section-title">Top Hitet - Më të Shkarkuara</h2>
-            <div class="tracks-container">
-                
-                <!-- Kënga 1 -->
-                <div class="track-card" data-id="butrint-imeri-cigaren">
-                    <div class="thumb-container">
-                        <img src="https://shkarko.co" alt="Butrint Imeri" class="poster" />
-                        <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon" id="icon-butrint-imeri-cigaren"></i>
-                        </div>
-                    </div>
-                    <div class="track-details">
-                        <h3 class="track-title">BUTRINT IMERI - CIGAREN</h3>
-                        <p class="track-downloads"><i class="fa-solid fa-download"></i> 452,934 Shkarkime</p>
-                    </div>
-                </div>
-
-                <!-- Kënga 2 -->
-                <div class="track-card" data-id="don-xhoni-katile">
-                    <div class="thumb-container">
-                        <img src="https://shkarko.co" alt="Don Xhoni" class="poster" />
-                        <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon" id="icon-don-xhoni-katile"></i>
-                        </div>
-                    </div>
-                    <div class="track-details">
-                        <h3 class="track-title">DON XHONI - KATILE</h3>
-                        <p class="track-downloads"><i class="fa-solid fa-download"></i> 347,132 Shkarkime</p>
-                    </div>
-                </div>
-
-                <!-- Kënga 3 -->
-                <div class="track-card" data-id="elvana-gjata-x-gimi-o-x-bardhi-ex">
-                    <div class="thumb-container">
-                        <img src="https://shkarko.co" alt="Elvana Gjata" class="poster" />
-                        <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon" id="icon-elvana-gjata-x-gimi-o-x-bardhi-ex"></i>
-                        </div>
-                    </div>
-                    <div class="track-details">
-                        <h3 class="track-title">ELVANA GJATA X GIMI O X BARDHI - EX</h3>
-                        <p class="track-downloads"><i class="fa-solid fa-download"></i> 229,206 Shkarkime</p>
-                    </div>
-                </div>
-
-                <!-- Kënga 4 -->
-                <div class="track-card" data-id="noizy-x-loredana-heart-attack">
-                    <div class="thumb-container">
-                        <img src="https://shkarko.co" alt="Noizy x Loredana" class="poster" />
-                        <div class="hover-overlay">
-                            <i class="fa-solid fa-play play-icon" id="icon-noizy-x-loredana-heart-attack"></i>
-                        </div>
-                    </div>
-                    <div class="track-details">
-                        <h3 class="track-title">NOIZY X LOREDANA - HEART ATTACK</h3>
-                        <p class="track-downloads"><i class="fa-solid fa-download"></i> 189,450 Shkarkime</p>
-                    </div>
-                </div>
-
-            </div>
+        <!-- Seksioni Dinamik i Këngëve -->
+        <div class="featured-section" id="mainSection">
+            <h2 class="section-title" id="sectionTitle">Top Hitet - Më të Shkarkuara</h2>
+            <div class="tracks-container" id="tracksContainer"></div>
         </div>
     </div>
 
-    <!-- Audio Player Bar -->
+    <!-- Audio Player UI Component -->
     <div class="audio-player-bar" id="playerBar">
         <div class="player-info">
-            <i class="fa-solid fa-music music-wave" id="musicWave"></i>
-            <span id="currentTrackTitle">Asnjë këngë...</span>
+            <!-- Equalizer Animacion -->
+            <div class="wave-visualizer" id="waveVisualizer">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="player-text-details">
+                <span id="currentTrackTitle">Asnjë këngë...</span>
+                <span id="currentTrackArtist" class="sub-text">Zgjidhni një këngë</span>
+            </div>
         </div>
         <div class="player-controls">
-            <button id="btn-backward"><i class="fa-solid fa-backward-step"></i></button>
-            <button id="btn-main-play"><i class="fa-solid fa-circle-play"></i></button>
-            <button id="btn-forward"><i class="fa-solid fa-forward-step"></i></button>
+            <button id="btn-backward" type="button"><i class="fa-solid fa-backward-step"></i></button>
+            <button id="btn-main-play" type="button"><i class="fa-solid fa-circle-play"></i></button>
+            <button id="btn-forward" type="button"><i class="fa-solid fa-forward-step"></i></button>
         </div>
         <div class="player-volume">
-            <i class="fa-solid fa-volume-high"></i>
+            <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" />
         </div>
     </div>
 
-    <!-- Lidhja me skedarin JavaScript -->
-    <script src="script.js"></script>
+    <!-- Kontenitori për Njoftimet UI (Toast) -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Lidhja e dy skripteve sipas radhës së saktë -->
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="ui.js"></script>
 </body>
 </html>
 
