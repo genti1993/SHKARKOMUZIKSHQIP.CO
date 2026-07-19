@@ -1,28 +1,14 @@
+/* Libraria e ikonave dhe stilimi i tyre */
 @import url('https://cloudflare.com');
 
-.play-icon {
-    font-size: 42px;
+.icn {
+    margin-right: 12px;
     color: #00adb5;
-    transition: transform 0.2s ease, color 0.2s ease;
+    width: 20px;
+    text-align: center;
 }
 
-.play-icon:hover {
-    transform: scale(1.1);
-    color: #00fff2;
-}
-
-.search-icon {
-    color: #555555;
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-.download-btn-direct {
-    color: #666666;
-    font-size: 18px;
-    transition: color 0.2s ease;
-}
-
-.download-btn-direct:hover {
-    color: #00fff2;
+.play-icon {
+    font-size: 40px;
+    color: #00adb5;
 }
