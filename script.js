@@ -1,394 +1,132 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// Të dhënat origjinale të këngëve me fotot photo/track
+const songsData = {
+    "butrint-imeri-cigaren": {
+        title: "BUTRINT IMERI - CIGAREN",
+        downloads: "452,934 Shkarkime",
+        image: "https://shkarko.co",
+        url: "https://soundhelix.com"
+    },
+    "don-xhoni-katile": {
+        title: "DON XHONI - KATILE",
+        downloads: "347,132 Shkarkime",
+        image: "https://shkarko.co",
+        url: "https://soundhelix.com"
+    },
+    "elvana-gjata-x-gimi-o-x-bardhi-ex": {
+        title: "ELVANA GJATA X GIMI O X BARDHI - EX",
+        downloads: "229,206 Shkarkime",
+        image: "https://shkarko.co",
+        url: "https://soundhelix.com"
+    },
+    "noizy-x-loredana-heart-attack": {
+        title: "NOIZY X LOREDANA - HEART ATTACK",
+        downloads: "189,450 Shkarkime",
+        image: "https://shkarko.co",
+        url: "https://soundhelix.com"
+    }
+};
+
+const keys = Object.keys(songsData);
+const currentAudio = new Audio();
+let isPlaying = false;
+let currentTrackId = null;
+
+const tracksContainer = document.getElementById('tracksContainer');
+const playerBar = document.getElementById('playerBar');
+const currentTrackTitle = document.getElementById('currentTrackTitle');
+const btnMainPlay = document.getElementById('btn-main-play');
+const btnForward = document.getElementById('btn-forward');
+const btnBackward = document.getElementById('btn-backward');
+const volumeSlider = document.getElementById('volumeSlider');
+const musicWave = document.getElementById('musicWave');
+
+function renderTracks() {
+    if (!tracksContainer) return;
+    tracksContainer.innerHTML = "";
+    
+    keys.forEach(id => {
+        const track = songsData[id];
+        const cardHTML = `
+            <div class="track-card" data-id="${id}">
+                <div class="thumb-container">
+                    <img src="${track.image}" alt="${track.title}" class="poster" />
+                    <div class="hover-overlay">
+                        <i id="icon-${id}" class="fa-solid fa-play play-icon"></i>
+                    </div>
+                </div>
+                <div class="track-details">
+                    <h3 class="track-title">${track.title}</h3>
+                    <p class="track-downloads"><i class="fa-solid fa-download"></i> ${track.downloads}</p>
+                </div>
+            </div>
+        `;
+        tracksContainer.insertAdjacentHTML('beforeend', cardHTML);
+    });
+
+    document.querySelectorAll('.track-card').forEach(card => {
+        card.addEventListener('click', () => {
+            handlePlayPause(card.getAttribute('data-id'));
+        });
+    });
 }
 
-body {
-    background-color: #000000 !important;
-    color: #ffffff;
-    display: flex;
-    min-height: 100vh;
-    overflow-x: hidden;
+function handlePlayPause(trackId) {
+    const mainPlayIcon = btnMainPlay.querySelector('i');
+    const cardIcon = document.getElementById(`icon-${trackId}`);
+
+    if (currentTrackId === trackId) {
+        if (isPlaying) {
+            currentAudio.pause();
+            isPlaying = false;
+            mainPlayIcon.className = "fa-solid fa-circle-play";
+            if (cardIcon) cardIcon.className = "fa-solid fa-play play-icon";
+            musicWave.classList.remove('animated');
+        } else {
+            currentAudio.play();
+            isPlaying = true;
+            mainPlayIcon.className = "fa-solid fa-circle-pause";
+            if (cardIcon) cardIcon.className = "fa-solid fa-pause play-icon";
+            musicWave.classList.add('animated');
+        }
+    } else {
+        if (currentTrackId) {
+            const oldCardIcon = document.getElementById(`icon-${currentTrackId}`);
+            if (oldCardIcon) oldCardIcon.className = "fa-solid fa-play play-icon";
+        }
+
+        currentTrackId = trackId;
+        currentAudio.src = songsData[trackId].url;
+        currentTrackTitle.innerText = songsData[trackId].title;
+        playerBar.style.display = 'flex';
+
+        currentAudio.play().then(() => {
+            isPlaying = true;
+            mainPlayIcon.className = "fa-solid fa-circle-pause";
+            if (cardIcon) cardIcon.className = "fa-solid fa-pause play-icon";
+            musicWave.classList.add('animated');
+        }).catch(err => console.error(err));
+    }
 }
 
-/* Sidebar UI */
-.sidebar {
-    width: 260px;
-    background-color: #050505;
-    padding: 30px 20px;
-    position: fixed;
-    height: 100vh;
-    border-right: 1px solid #111111;
-    z-index: 100;
+function nextTrack() {
+    if (!currentTrackId) return;
+    let currentIndex = keys.indexOf(currentTrackId);
+    handlePlayPause(keys[(currentIndex + 1) % keys.length]);
 }
 
-.logo-container h2 {
-    color: #00adb5;
-    font-size: 24px;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+function prevTrack() {
+    if (!currentTrackId) return;
+    let currentIndex = keys.indexOf(currentTrackId);
+    handlePlayPause(keys[(currentIndex - 1 + keys.length) % keys.length]);
 }
 
-/* Shiriti i Kërkimit UI */
-.search-box-container {
-    display: flex;
-    align-items: center;
-    background-color: #111111;
-    border: 1px solid #222222;
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    transition: border-color 0.3s;
-}
+btnMainPlay.addEventListener('click', () => currentTrackId && handlePlayPause(currentTrackId));
+btnForward.addEventListener('click', nextTrack);
+btnBackward.addEventListener('click', prevTrack);
+volumeSlider.addEventListener('input', (e) => currentAudio.volume = e.target.value);
+currentAudio.addEventListener('ended', nextTrack);
 
-.search-box-container:focus-within {
-    border-color: #00adb5;
-}
-
-.search-icon {
-    color: #555555;
-    margin-right: 10px;
-}
-
-.search-box-container input {
-    background: none;
-    border: none;
-    color: #ffffff;
-    outline: none;
-    width: 100%;
-    font-size: 14px;
-}
-
-.nav-links {
-    list-style: none;
-}
-
-.nav-links li {
-    margin-bottom: 12px;
-}
-
-.nav-links a {
-    color: #888888;
-    text-decoration: none;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px;
-    border-radius: 6px;
-    transition: all 0.3s;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #ffffff;
-    background-color: #111111;
-    border-left: 4px solid #00adb5;
-}
-
-/* Faqja Qendrore UI */
-.main-content {
-    margin-left: 260px;
-    flex: 1;
-    padding: 40px;
-    background-color: #000000 !important;
-    padding-bottom: 140px; 
-}
-
-.top-tabs {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.tab {
-    color: #ffffff;
-    background-color: #0a0a0a;
-    border: 1px solid #222222;
-    padding: 10px 24px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.tab:hover, .tab.active {
-    background-color: #00adb5;
-    border-color: #00adb5;
-    box-shadow: 0 0 10px rgba(0, 173, 181, 0.4);
-}
-
-.section-title {
-    font-size: 28px;
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-.tracks-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-}
-
-/* Kartat e Këngëve UI */
-.track-card {
-    background-color: #050505;
-    border: 1px solid #111111;
-    padding: 15px;
-    border-radius: 12px;
-    width: 210px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.track-card:hover {
-    background-color: #0e0e0d;
-    border-color: #222222;
-    transform: translateY(-5px);
-}
-
-.thumb-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.poster {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hover-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.65);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.track-card:hover .hover-overlay {
-    opacity: 1;
-}
-
-.play-icon {
-    font-size: 42px;
-    color: #00adb5;
-}
-
-.track-details {
-    padding: 2px 0;
-}
-
-.track-title {
-    font-size: 14px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 8px;
-}
-
-.track-bottom-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.track-downloads {
-    font-size: 12px;
-    color: #666666;
-}
-
-.track-downloads i {
-    color: #00adb5;
-    margin-right: 5px;
-}
-
-.download-btn-direct {
-    color: #666666;
-    font-size: 18px;
-    transition: color 0.2s;
-}
-
-.download-btn-direct:hover {
-    color: #00fff2;
-}
-
-/* Audio Player Control Panel UI */
-.audio-player-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 95px;
-    background-color: #050505;
-    border-top: 1px solid #161616;
-    display: none; 
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-    z-index: 9999;
-    box-shadow: 0 -5px 25px rgba(0,0,0,0.8);
-}
-
-.player-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 30%;
-}
-
-.player-text-details {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-#currentTrackTitle {
-    font-size: 14px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.sub-text {
-    font-size: 12px;
-    color: #666666;
-    margin-top: 2px;
-}
-
-/* Equalizer Wave UI Animacion */
-.wave-visualizer {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    width: 24px;
-    height: 20px;
-}
-
-.wave-visualizer span {
-    width: 3px;
-    height: 20%;
-    background-color: #00adb5;
-    border-radius: 2px;
-}
-
-.wave-visualizer.playing span {
-    animation: bounceUI 0.7s infinite alternate ease-in-out;
-}
-
-.wave-visualizer.playing span:nth-child(2) { animation-delay: 0.15s; }
-.wave-visualizer.playing span:nth-child(3) { animation-delay: 0.3s; }
-.wave-visualizer.playing span:nth-child(4) { animation-delay: 0.45s; }
-
-@keyframes bounceUI {
-    0% { height: 20%; }
-    100% { height: 100%; background-color: #00fff2; }
-}
-
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-
-.player-controls button {
-    background: none;
-    border: none;
-    color: #666666;
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.player-controls button:hover {
-    color: #ffffff;
-}
-
-#btn-main-play {
-    color: #00adb5;
-    font-size: 40px;
-}
-
-#btn-main-play:hover {
-    color: #00fff2;
-}
-
-.player-volume {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #666666;
-    width: 20%;
-    justify-content: flex-end;
-}
-
-#volumeSlider {
-    accent-color: #00adb5;
-    cursor: pointer;
-}
-
-/* Toast Pop-up UI alerts */
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10000;
-}
-
-.toast-alert {
-    background-color: #111111;
-    color: #ffffff;
-    border-left: 4px solid #00adb5;
-    padding: 12px 24px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    animation: slideInUI 0.3s ease;
-}
-
-.empty-msg {
-    color: #555555;
-    font-style: italic;
-    font-size: 16px;
-}
-
-@keyframes slideInUI {
-    from { transform: translateX(120%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeOut {
-    to { opacity: 0; transform: translateY(-4px); }
-}
-
-@media (max-width: 768px) {
-    body { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; border-right: none; }
-    .main-content { margin-left: 0; padding: 20px; padding-bottom: 160px; }
-    .tracks-container { justify-content: center; }
-    .audio-player-bar { flex-direction: column; height: 140px; padding: 15px; justify-content: center; gap: 10px; }
-    .player-info, .player-volume { width: 100%; justify-content: center; }
-}
+renderTracks();
 
 
 
