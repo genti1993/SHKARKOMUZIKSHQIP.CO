@@ -1,0 +1,29 @@
+/* Stilimi i Audio Player-it në fund të faqes */
+.player-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #181818;
+    border-top: 1px solid #282828;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2000;
+}
+.player-info { color: #fff; font-weight: bold; font-size: 14px; }
+.player-controls button {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.player-controls button:hover { color: #fff; }
+#btn-play-trigger { color: #00adb5; font-size: 28px; }
+#btn-play-trigger:hover { color: #00fff2; }
+.player-volume { display: flex; align-items: center; gap: 10px; color: #b3b3b3; }
+#volume-slider { accent-color: #00adb5; cursor: pointer; }
