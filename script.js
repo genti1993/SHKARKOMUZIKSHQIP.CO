@@ -1,94 +1,114 @@
-// Ruajmë listën e këngëve me linket e tyre audio (stream) nga burimi yt
-const tracks = {
+// Menaxhimi i këngëve (Track Management)
+const songsData = {
     "butrint-imeri-cigaren": {
         title: "BUTRINT IMERI - CIGAREN",
-        url: "https://unsplash.com" // Link i përkohshëm audio për test
+        url: "https://soundhelix.com"
     },
     "don-xhoni-katile": {
         title: "DON XHONI - KATILE",
-        url: "https://unsplash.com"
+        url: "https://soundhelix.com"
     },
     "elvana-gjata-x-gimi-o-x-bardhi-ex": {
         title: "ELVANA GJATA X GIMI O X BARDHI - EX",
-        url: "https://unsplash.com"
+        url: "https://soundhelix.com"
     },
     "noizy-x-loredana-heart-attack": {
         title: "NOIZY X LOREDANA - HEART ATTACK",
-        url: "https://unsplash.com"
+        url: "https://soundhelix.com"
     }
 };
 
-let currentAudio = new Audio();
+const keys = Object.keys(songsData);
+const currentAudio = new Audio();
 let isPlaying = false;
 let currentTrackId = null;
 
-// Krijojmë strukturën e Audio Player-it në fund të faqes në mënyrë dinamike
-const playerHTML = `
-    <div id="audio-player" class="player-container" style="display: none;">
-        <div class="player-info">
-            <span id="player-title">Asnjë këngë</span>
-        </div>
-        <div class="player-controls">
-            <button id="btn-prev"><i class="fa-solid fa-backward-step"></i></button>
-            <button id="btn-play-trigger"><i class="fa-solid fa-circle-play"></i></button>
-            <button id="btn-next"><i class="fa-solid fa-forward-step"></i></button>
-        </div>
-        <div class="player-volume">
-            <i class="fa-solid fa-volume-high"></i>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
-        </div>
-    </div>
-`;
-document.body.insertAdjacentHTML('beforeend', playerHTML);
-
-// Përzgjedhim elementet nga DOM
-const audioPlayer = document.getElementById('audio-player');
-const playerTitle = document.getElementById('player-title');
-const btnPlayTrigger = document.getElementById('btn-play-trigger');
-const volumeSlider = document.getElementById('volume-slider');
+// Elementet DOM
+const playerBar = document.getElementById('playerBar');
+const currentTrackTitle = document.getElementById('currentTrackTitle');
+const btnMainPlay = document.getElementById('btn-main-play');
+const btnForward = document.getElementById('btn-forward');
+const btnBackward = document.getElementById('btn-backward');
+const volumeSlider = document.getElementById('volumeSlider');
+const musicWave = document.getElementById('musicWave');
 const trackCards = document.querySelectorAll('.track-card');
 
-// Funksioni për të luajtur ose ndaluar muzikën
-function togglePlay(trackId) {
-    const playIcon = btnPlayTrigger.querySelector('i');
-    
+function handlePlayPause(trackId) {
+    const mainPlayIcon = btnMainPlay.querySelector('i');
+    const cardIcon = document.getElementById(`icon-${trackId}`);
+
     if (currentTrackId === trackId) {
         if (isPlaying) {
             currentAudio.pause();
-            playIcon.className = "fa-solid fa-circle-play";
             isPlaying = false;
+            mainPlayIcon.className = "fa-solid fa-circle-play";
+            if (cardIcon) cardIcon.className = "fa-solid fa-play play-icon";
+            musicWave.classList.remove('animated');
         } else {
             currentAudio.play();
-            playIcon.className = "fa-solid fa-circle-pause";
             isPlaying = true;
+            mainPlayIcon.className = "fa-solid fa-circle-pause";
+            if (cardIcon) cardIcon.className = "fa-solid fa-pause play-icon";
+            musicWave.classList.add('animated');
         }
     } else {
-        // Luajmë një këngë të re
+        if (currentTrackId) {
+            const oldCardIcon = document.getElementById(`icon-${currentTrackId}`);
+            if (oldCardIcon) oldCardIcon.className = "fa-solid fa-play play-icon";
+        }
+
         currentTrackId = trackId;
-        currentAudio.src = tracks[trackId].url;
-        playerTitle.innerText = tracks[trackId].title;
-        audioPlayer.style.display = "flex";
-        
+        currentAudio.src = songsData[trackId].url;
+        currentTrackTitle.innerText = songsData[trackId].title;
+        playerBar.style.display = 'flex';
+
         currentAudio.play().then(() => {
-            playIcon.className = "fa-solid fa-circle-pause";
             isPlaying = true;
-        }).catch(err => console.log("Gabim gjatë ngarkimit audio:", err));
+            mainPlayIcon.className = "fa-solid fa-circle-pause";
+            if (cardIcon) cardIcon.className = "fa-solid fa-pause play-icon";
+            musicWave.classList.add('animated');
+        }).catch(err => console.error("Gabim audio:", err));
     }
 }
 
-// Lidhim ngjarjen e klikimit (Click) për çdo kartë kënge
+// Kalimi te kënga tjetër (Next)
+function nextTrack() {
+    if (!currentTrackId) return;
+    let currentIndex = keys.indexOf(currentTrackId);
+    let nextIndex = (currentIndex + 1) % keys.length;
+    handlePlayPause(keys[nextIndex]);
+}
+
+// Kalimi te kënga e mëparshme (Previous)
+function prevTrack() {
+    if (!currentTrackId) return;
+    let currentIndex = keys.indexOf(currentTrackId);
+    let prevIndex = (currentIndex - 1 + keys.length) % keys.length;
+    handlePlayPause(keys[prevIndex]);
+}
+
+// Event Listeners
 trackCards.forEach(card => {
     card.addEventListener('click', () => {
-        const id = card.getAttribute('data-id');
-        togglePlay(id);
+        handlePlayPause(card.getAttribute('data-id'));
     });
 });
 
-// Kontrollet e player-it të poshtëm
-btnPlayTrigger.addEventListener('click', () => {
-    if (currentTrackId) togglePlay(currentTrackId);
+btnMainPlay.addEventListener('click', () => {
+    if (currentTrackId) handlePlayPause(currentTrackId);
 });
 
-volumeSlider.addEventListener('input', (e) => {
-    currentAudio.volume = e.target.value;
+btnForward.addEventListener('click', nextTrack);
+btnBackward.addEventListener('click', prevTrack);
+volumeSlider.addEventListener('input', (e) => currentAudio.volume = e.target.value);
+
+currentAudio.addEventListener('ended', () => {
+    isPlaying = false;
+    btnMainPlay.querySelector('i').className = "fa-solid fa-circle-play";
+    musicWave.classList.remove('animated');
+    const cardIcon = document.getElementById(`icon-${currentTrackId}`);
+    if (cardIcon) cardIcon.className = "fa-solid fa-play play-icon";
+    nextTrack(); // Luaj automatikisht këngën pasardhëse
 });
+
+
