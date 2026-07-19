@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Shkarko Muzik Shqip mp3 falas</title>
     
-    <!-- Lidhja e të 5 skedarëve CSS sipas strukturës origjinale -->
-    <link rel="stylesheet" type="text/css" href="favicon.ico" rel="shortcut icon" />
+    <!-- Lidhja e 4 skedarëve të stilit (CSS) -->
     <link rel="stylesheet" type="text/css" href="icon.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="props.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="scroll.css" media="screen" />
@@ -14,46 +13,42 @@
 </head>
 <body class="scrollbars size14 fontn color333 featured">
 
-    <!-- Sidebar UI -->
+    <!-- Sidebar / Menuja Anësore -->
     <div class="sidebar fixed scrolls">	
-        <div class="logo-container">
+        <a href="#" class="logo rel noul bl">
             <h2>Muzik Shqip</h2>
-        </div>
+        </a>
         <ul class="nav size16 fontl">
-            <li><a href="#" class="nav-item active" data-target="home"><i class="fa-solid fa-house"></i> Ballina</a></li>
-            <li><a href="#" class="nav-item" data-target="favorites"><i class="fa-solid fa-heart"></i> Të Preferuarat</a></li>
-            <li><a href="#" class="nav-item" data-target="info"><i class="fa-solid fa-circle-info"></i> Informata</a></li>
+            <li class="rel"><a href="#" class="bl noul active" id="nav-home"><i class="fa-solid fa-house icn"></i> Ballina</a></li>
+            <li class="rel"><a href="#" class="bl noul" id="nav-search"><i class="fa-solid fa-magnifying-glass icn"></i> Kërko</a></li>
+            <li class="rel"><a href="#" class="bl noul" id="nav-info"><i class="fa-solid fa-circle-info"></i> Informata</a></li>
+            <li class="rel"><a href="#" class="bl noul" id="nav-contact"><i class="fa-solid fa-envelope"></i> Na kontaktoni</a></li>
         </ul>
     </div>
 
-    <!-- Main Content UI -->
-    <div class="main-content">
-        <div class="fixed gbox gbox-featured scrolls">
-            <ol class="ibl htabs size15 fontb" id="tabMenu">
-                <li><button class="tab active" data-category="all">Të Gjitha</button></li>
-                <li><button class="tab" data-category="hitet">Top Hitet</button></li>
-                <li><button class="tab" data-category="new">Këngët të Reja</button></li>
-            </ol>
+    <!-- Përmbajtja Qendrore -->
+    <div class="main-content fixed gbox gbox-featured scrolls">
+        <div class="top-tabs htabs size15 fontb">
+            <button class="tab active" data-tab="featured">Hitet</button>
+            <button class="tab" data-tab="new">Këngët të Reja</button>
+            <button class="tab" data-tab="albums">Albume</button>
         </div>
 
         <div class="dataBox rel">
             <div class="featured-section">
-                <h2 class="size30 fontb cfff areaTitle" id="sectionTitle">Top Hitet - Më të Shkarkuara</h2>
+                <h2 class="size30 fontb cfff areaTitle">Top Hitet - Shkarkuara</h2>
+                
+                <!-- Kontenitori ku skripti do të hedhë këngët automatikisht -->
                 <div class="tracks-container" id="tracksContainer"></div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Audio Player Component -->
+    <!-- Audio Player Bar -->
     <div class="audio-player-bar" id="playerBar">
         <div class="player-info">
-            <div class="wave-visualizer" id="waveVisualizer">
-                <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="player-text-details">
-                <span id="currentTrackTitle">Asnjë këngë...</span>
-                <span id="currentTrackArtist" class="sub-text">Zgjidhni një këngë</span>
-            </div>
+            <i class="fa-solid fa-music music-wave" id="musicWave"></i>
+            <span id="currentTrackTitle">Asnjë këngë...</span>
         </div>
         <div class="player-controls">
             <button id="btn-backward" type="button"><i class="fa-solid fa-backward-step"></i></button>
@@ -61,17 +56,16 @@
             <button id="btn-forward" type="button"><i class="fa-solid fa-forward-step"></i></button>
         </div>
         <div class="player-volume">
-            <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
+            <i class="fa-solid fa-volume-high"></i>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" />
         </div>
     </div>
 
-    <div id="toast-container" class="toast-container"></div>
-
-    <!-- Dy skedarët e fundit të kodit script -->
+    <!-- Lidhja e 2 skedarëve të logjikës (JS) -->
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="ui.js"></script>
 </body>
 </html>
+
 
 
