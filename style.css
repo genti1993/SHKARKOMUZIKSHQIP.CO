@@ -6,27 +6,60 @@
 }
 
 body {
-    background-color: #141414;
+    background-color: #000000 !important;
     color: #ffffff;
     display: flex;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
+/* Sidebar UI */
 .sidebar {
-    width: 240px;
-    background-color: #000000;
+    width: 260px;
+    background-color: #050505;
     padding: 30px 20px;
     position: fixed;
     height: 100vh;
-    border-right: 1px solid #222;
+    border-right: 1px solid #111111;
+    z-index: 100;
 }
 
 .logo-container h2 {
     color: #00adb5;
     font-size: 24px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+/* Shiriti i Kërkimit UI */
+.search-box-container {
+    display: flex;
+    align-items: center;
+    background-color: #111111;
+    border: 1px solid #222222;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    transition: border-color 0.3s;
+}
+
+.search-box-container:focus-within {
+    border-color: #00adb5;
+}
+
+.search-icon {
+    color: #555555;
+    margin-right: 10px;
+}
+
+.search-box-container input {
+    background: none;
+    border: none;
+    color: #ffffff;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
 }
 
 .nav-links {
@@ -34,32 +67,34 @@ body {
 }
 
 .nav-links li {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .nav-links a {
-    color: #b3b3b3;
+    color: #888888;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 6px;
     transition: all 0.3s;
 }
 
 .nav-links a:hover, .nav-links a.active {
     color: #ffffff;
-    background-color: #1a1a1a;
+    background-color: #111111;
     border-left: 4px solid #00adb5;
 }
 
+/* Faqja Qendrore UI */
 .main-content {
-    margin-left: 240px;
+    margin-left: 260px;
     flex: 1;
     padding: 40px;
-    background: linear-gradient(to bottom, #1f1f1f, #141414);
+    background-color: #000000 !important;
+    padding-bottom: 140px; 
 }
 
 .top-tabs {
@@ -70,17 +105,20 @@ body {
 
 .tab {
     color: #ffffff;
-    text-decoration: none;
-    padding: 8px 20px;
-    background-color: #282828;
+    background-color: #0a0a0a;
+    border: 1px solid #222222;
+    padding: 10px 24px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
-    transition: background 0.3s;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .tab:hover, .tab.active {
     background-color: #00adb5;
+    border-color: #00adb5;
+    box-shadow: 0 0 10px rgba(0, 173, 181, 0.4);
 }
 
 .section-title {
@@ -95,18 +133,20 @@ body {
     gap: 25px;
 }
 
+/* Kartat e Këngëve UI */
 .track-card {
-    background-color: #181818;
+    background-color: #050505;
+    border: 1px solid #111111;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 12px;
     width: 210px;
-    transition: background 0.3s, transform 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .track-card:hover {
-    background-color: #282828;
+    background-color: #0e0e0d;
+    border-color: #222222;
     transform: translateY(-5px);
 }
 
@@ -114,7 +154,7 @@ body {
     position: relative;
     width: 100%;
     aspect-ratio: 1;
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
     margin-bottom: 15px;
 }
@@ -131,7 +171,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.65);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,12 +184,12 @@ body {
 }
 
 .play-icon {
-    font-size: 40px;
+    font-size: 42px;
     color: #00adb5;
 }
 
 .track-details {
-    padding: 5px 0;
+    padding: 2px 0;
 }
 
 .track-title {
@@ -158,12 +198,18 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+}
+
+.track-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .track-downloads {
     font-size: 12px;
-    color: #b3b3b3;
+    color: #666666;
 }
 
 .track-downloads i {
@@ -171,20 +217,176 @@ body {
     margin-right: 5px;
 }
 
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    .main-content {
-        margin-left: 0;
-        padding: 20px;
-    }
-    .tracks-container {
-        justify-content: center;
-    }
+.download-btn-direct {
+    color: #666666;
+    font-size: 18px;
+    transition: color 0.2s;
 }
+
+.download-btn-direct:hover {
+    color: #00fff2;
+}
+
+/* Audio Player Control Panel UI */
+.audio-player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 95px;
+    background-color: #050505;
+    border-top: 1px solid #161616;
+    display: none; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 9999;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.8);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 30%;
+}
+
+.player-text-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#currentTrackTitle {
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sub-text {
+    font-size: 12px;
+    color: #666666;
+    margin-top: 2px;
+}
+
+/* Equalizer Wave UI Animacion */
+.wave-visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    width: 24px;
+    height: 20px;
+}
+
+.wave-visualizer span {
+    width: 3px;
+    height: 20%;
+    background-color: #00adb5;
+    border-radius: 2px;
+}
+
+.wave-visualizer.playing span {
+    animation: bounceUI 0.7s infinite alternate ease-in-out;
+}
+
+.wave-visualizer.playing span:nth-child(2) { animation-delay: 0.15s; }
+.wave-visualizer.playing span:nth-child(3) { animation-delay: 0.3s; }
+.wave-visualizer.playing span:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes bounceUI {
+    0% { height: 20%; }
+    100% { height: 100%; background-color: #00fff2; }
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.player-controls button {
+    background: none;
+    border: none;
+    color: #666666;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.player-controls button:hover {
+    color: #ffffff;
+}
+
+#btn-main-play {
+    color: #00adb5;
+    font-size: 40px;
+}
+
+#btn-main-play:hover {
+    color: #00fff2;
+}
+
+.player-volume {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #666666;
+    width: 20%;
+    justify-content: flex-end;
+}
+
+#volumeSlider {
+    accent-color: #00adb5;
+    cursor: pointer;
+}
+
+/* Toast Pop-up UI alerts */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+}
+
+.toast-alert {
+    background-color: #111111;
+    color: #ffffff;
+    border-left: 4px solid #00adb5;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    animation: slideInUI 0.3s ease;
+}
+
+.empty-msg {
+    color: #555555;
+    font-style: italic;
+    font-size: 16px;
+}
+
+@keyframes slideInUI {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-4px); }
+}
+
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; border-right: none; }
+    .main-content { margin-left: 0; padding: 20px; padding-bottom: 160px; }
+    .tracks-container { justify-content: center; }
+    .audio-player-bar { flex-direction: column; height: 140px; padding: 15px; justify-content: center; gap: 10px; }
+    .player-info, .player-volume { width: 100%; justify-content: center; }
+}
+
