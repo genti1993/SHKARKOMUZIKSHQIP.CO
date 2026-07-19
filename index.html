@@ -2,52 +2,51 @@
 <html xmlns="http://w3.org" lang="sq" xml:lang="sq">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>Shkarko Muzik Shqip mp3 falas</title>
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-    <link rel="stylesheet" href="https://cloudflare.com" />
+    
+    <!-- Lidhja e të 5 skedarëve CSS sipas strukturës origjinale -->
+    <link rel="stylesheet" type="text/css" href="favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" type="text/css" href="icon.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="props.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="scroll.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="core.css" media="screen" />
 </head>
-<body class="featured-page">
+<body class="scrollbars size14 fontn color333 featured">
 
-    <!-- Menuja Anësore (Sidebar UI) -->
-    <div class="sidebar">	
+    <!-- Sidebar UI -->
+    <div class="sidebar fixed scrolls">	
         <div class="logo-container">
             <h2>Muzik Shqip</h2>
         </div>
-        
-        <!-- Shiriti i Kërkimit UI -->
-        <div class="search-box-container">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="searchInput" placeholder="Kërko artist ose këngë..." />
-        </div>
-
-        <ul class="nav-links">
+        <ul class="nav size16 fontl">
             <li><a href="#" class="nav-item active" data-target="home"><i class="fa-solid fa-house"></i> Ballina</a></li>
             <li><a href="#" class="nav-item" data-target="favorites"><i class="fa-solid fa-heart"></i> Të Preferuarat</a></li>
             <li><a href="#" class="nav-item" data-target="info"><i class="fa-solid fa-circle-info"></i> Informata</a></li>
         </ul>
     </div>
 
-    <!-- Përmbajtja Qendrore -->
+    <!-- Main Content UI -->
     <div class="main-content">
-        <!-- Tabet e Lundrimit UI -->
-        <div class="top-tabs" id="tabMenu">
-            <button class="tab active" data-category="all">Të Gjitha</button>
-            <button class="tab" data-category="hitet">Top Hitet</button>
-            <button class="tab" data-category="new">Këngët të Reja</button>
+        <div class="fixed gbox gbox-featured scrolls">
+            <ol class="ibl htabs size15 fontb" id="tabMenu">
+                <li><button class="tab active" data-category="all">Të Gjitha</button></li>
+                <li><button class="tab" data-category="hitet">Top Hitet</button></li>
+                <li><button class="tab" data-category="new">Këngët të Reja</button></li>
+            </ol>
         </div>
 
-        <!-- Seksioni Dinamik i Këngëve -->
-        <div class="featured-section" id="mainSection">
-            <h2 class="section-title" id="sectionTitle">Top Hitet - Më të Shkarkuara</h2>
-            <div class="tracks-container" id="tracksContainer"></div>
+        <div class="dataBox rel">
+            <div class="featured-section">
+                <h2 class="size30 fontb cfff areaTitle" id="sectionTitle">Top Hitet - Më të Shkarkuara</h2>
+                <div class="tracks-container" id="tracksContainer"></div>
+            </div>
         </div>
     </div>
 
-    <!-- Audio Player UI Component -->
+    <!-- Bottom Audio Player Component -->
     <div class="audio-player-bar" id="playerBar">
         <div class="player-info">
-            <!-- Equalizer Animacion -->
             <div class="wave-visualizer" id="waveVisualizer">
                 <span></span><span></span><span></span><span></span>
             </div>
@@ -67,12 +66,12 @@
         </div>
     </div>
 
-    <!-- Kontenitori për Njoftimet UI (Toast) -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- Lidhja e dy skripteve sipas radhës së saktë -->
+    <!-- Dy skedarët e fundit të kodit script -->
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="ui.js"></script>
 </body>
 </html>
+
 
